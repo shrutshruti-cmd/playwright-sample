@@ -1,5 +1,7 @@
 import type { PlaywrightTestConfig } from "@playwright/test";
 import { devices } from "@playwright/test";
+import { on } from "node:cluster";
+import { trace } from "node:console";
 
 // Playwright config to run tests on LambdaTest platform and local
 const config: PlaywrightTestConfig = {
@@ -18,8 +20,10 @@ const config: PlaywrightTestConfig = {
           user: process.env.LT_USERNAME,
           accessKey: process.env.LT_ACCESS_KEY,
           network: true,
-          video: true,
-          console: true
+          video: on,
+          console: true,
+          screenshot: on ,
+          trace: on
         }
       })
     )}`,

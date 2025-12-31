@@ -1,66 +1,30 @@
 require('dotenv').config();
-const { chromium } = require('playwright')
-const {expect} = require("expect");
-const cp = require('child_process');
-const playwrightClientVersion = cp.execSync('npx playwright --version').toString().trim().split(' ')[1];
-
+const { chromium } = require('playwright');
+ 
 (async () => {
   console.log('Starting Playwright test...');
   console.log('Playwright version:', playwrightClientVersion);
   
-  //  const capabilities = {
-  //   'browserName': 'Chrome', // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
-  //   'browserVersion': 'latest',
+   const capabilities = {
+    'browserName': 'Chrome', // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
+    'browserVersion': 'latest',
     
-  //   'LT:Options': {
-  //     'platform': 'Windows 10',
-  //     'build': 'playground',
-  //     'name': 'Playwright',
-  //     'user': process.env.LT_USERNAME,
-  //     'accessKey': process.env.LT_ACCESS_KEY,
-  //     'network': true,
-  //     'video': true,
-  //     'console': true,
-  //     'tunnel': true, // Add tunnel configuration if testing locally hosted webpage
-  //     'tunnelName': '', // Optional
-  //     'geoLocation': '', // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
-  //     'playwrightClientVersion': playwrightClientVersion
-  //   }
-  // }
+    'LT:Options': {
+      'platform': 'Windows 10',
+      'build': 'playground',
+      'name': 'Playwright',
+      'user': process.env.LT_USERNAME,
+      'accessKey': process.env.LT_ACCESS_KEY,
+      'network': true,
+      'video': true,
+      'console': true,
+      'tunnel': true, // Add tunnel configuration if testing locally hosted webpage
+      'tunnelName': '', // Optional
+      'geoLocation': '', // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
+      'playwrightClientVersion': playwrightClientVersion
+    }
+  }
 
-  const capability = {
-	"browserName": "Chrome",
-	"browserVersion": "beta",
-	"LT:Options": {
-		"video": true,
-		"platform": "Windows 10",
-    'user': process.env.LT_USERNAME,
-    'accessKey': process.env.LT_ACCESS_KEY,
-		"network": true,
-		"build": "playground",
-		"tunnel": true,
-    "tunnelName": "10590316",
-		"console": true,
-		"accessibility": true
-	}
-}
-//   const capability = {
-// 	"browserName": "Chrome",
-// 	"browserVersion": 'latest',
-// 	"LT:Options": {
-// 		"geoLocation": "MUM",
-// 		"timezone": "Kolkata",
-// 		"video": true,
-// 		"platform": "Windows 10",
-// 		"network": true,
-// 		"build": "playground",
-// 		"tunnel": true,
-// 		"tunnelName": "10590316",
-// 		"console": true,
-// 		"accessibility": true,
-// 		"smartUIProjectName": "playground"
-// 	}
-// }
 
   console.log('Connecting to LambdaTest...');
   console.log('Username:', process.env.LT_USERNAME);
