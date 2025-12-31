@@ -5,7 +5,26 @@ import { devices } from "@playwright/test";
 const config: PlaywrightTestConfig = {
   testDir: "tests",
   timeout: 300000,
-  use: {},
+  use: {
+      connectOptions: {
+    wsEndpoint: `wss://cdp.lambdatest.com/playwright?capabilities=${encodeURIComponent(
+      JSON.stringify({
+        browserName: 'chrome',
+        browserVersion: 'latest',
+        'LT:Options': {
+          platform: 'Windows 10',
+          build: 'playground',
+          name: 'Playwright Cloud Test',
+          user: process.env.LT_USERNAME,
+          accessKey: process.env.LT_ACCESS_KEY,
+          network: true,
+          video: true,
+          console: true
+        }
+      })
+    )}`,
+  },
+},
   projects: [
     // -- LambdaTest Config --
     // name in the format: browserName:browserVersion:platform@lambdatest

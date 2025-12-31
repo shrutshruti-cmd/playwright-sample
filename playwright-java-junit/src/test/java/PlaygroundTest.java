@@ -1,45 +1,25 @@
-import com.microsoft.playwright.*;
-import com.microsoft.playwright.options.AriaRole;
-import org.junit.jupiter.api.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-@RunWith(DataProviderRunner.class)  public class playground extends BaseTest {
-	static Playwright playwright;
-	static Browser browser;
+import com.google.gson.JsonObject;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
-	BrowserContext context;
-	Page page;
-
-	@BeforeAll
-	static void setupAll() {
-		playwright = Playwright.create();
-		browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
-	}
-
-	@AfterAll
-	static void tearDownAll() {
-		if (browser != null) browser.close();
-		if (playwright != null) playwright.close();
-	}
-
-	@BeforeEach
-	void setup() {
-		context = browser.newContext();
-		page = context.newPage();
-	}
-
-	@AfterEach
-	void tearDown() {
-		if (context != null) context.close();
-	}
-
+@RunWith(DataProviderRunner.class)  public class PlaygroundTest extends BaseTest {
 	@Test
     @UseDataProvider(value = "getDefaultTestCapability", location = LTCapability.class)
         public void validateMessageInputInLambdaTestSeleniumPlayground(JsonObject capability) throws Exception {
+		  Driver driver = null;
+         Page page = null;
+      driver = super.createConnection(capability);
+      page = driver.getPage();
 		page.navigate("https://www.lambdatest.com/selenium-playground");
 		page.click("text=Simple Form Demo");
 		assertTrue(page.url().contains("simple-form-demo"));
@@ -62,6 +42,8 @@ import static org.junit.jupiter.api.Assertions.*;
 	@Test
      @UseDataProvider(value = "getDefaultTestCapability", location = LTCapability.class)
         public void dragDefaultValue15SliderTo95(JsonObject capability) throws Exception {
+		Driver driver = null;
+        Page page = null;
 		page.navigate("https://www.lambdatest.com/selenium-playground");
 		page.click("text=Drag & Drop Sliders");
 		page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("drag-drop.png")));
@@ -79,6 +61,8 @@ import static org.junit.jupiter.api.Assertions.*;
 	@Test
      @UseDataProvider(value = "getDefaultTestCapability", location = LTCapability.class)
         public void inputFormSubmit(JsonObject capability) throws Exception {
+		Driver driver = null;
+         Page page = null;
 		page.navigate("https://www.lambdatest.com/selenium-playground");
 		page.click("text=Input Form Submit");
 		page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("input-form-submit.png")));
@@ -99,8 +83,7 @@ import static org.junit.jupiter.api.Assertions.*;
 		page.getByLabel("Address 2").fill("Suite 120");
 		page.getByLabel("State").fill("TX");
 		page.getByLabel("Zip Code").fill("75001");
-
-		page.selectOption("select[name='country']", new Page.SelectOptionOptions().setLabel("United States"));
+		page.selectOption("select[name='country']", "United States");
 		page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get("details-filled.png")));
 
 		page.click("text=Submit");

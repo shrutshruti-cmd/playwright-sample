@@ -7,28 +7,37 @@ import * as base from "@playwright/test";
 import path from "path";
 import { chromium } from "playwright";
 
-// LambdaTest capabilities
+//LambdaTest capabilities
 const capabilities = {
   browserName: "Chrome", // Browsers allowed: `Chrome`, `MicrosoftEdge`, `pw-chromium`, `pw-firefox` and `pw-webkit`
   browserVersion: "latest",
   "LT:Options": {
-    platform: "Windows 10",
-    build: "Playwright TS Build",
-    name: "Playwright Test",
-    user: process.env.LT_USERNAME,
-    accessKey: process.env.LT_ACCESS_KEY,
-    network: true,
-    video: true,
-    console: true,
-    tunnel: false, // Add tunnel configuration if testing locally hosted webpage
-    tunnelName: "", // Optional
-    geoLocation: '', // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
+    platform: 'Windows 10',
+          build: 'playground',
+          name: 'Playwright Cloud Test',
+          user: process.env.LT_USERNAME,
+          accessKey: process.env.LT_ACCESS_KEY,
+          network: true,
+          video: true,
+          console: true
+    // platform: "Windows 10",
+    // build: "Playwright TS Build",
+    // name: "Playwright Test",
+    // user: process.env.LT_USERNAME,
+    // accessKey: process.env.LT_ACCESS_KEY,
+    // network: true,
+    // video: true,
+    // console: true,
+    // tunnel: false, // Add tunnel configuration if testing locally hosted webpage
+    // tunnelName: "", // Optional
+    // geoLocation: '', // country code can be fetched from https://www.lambdatest.com/capabilities-generator/
   },
 };
 
+
 // Patching the capabilities dynamically according to the project name.
-const modifyCapabilities = (configName, testName) => {
-  let config = configName.split("@lambdatest")[0];
+const modifyCapabilities = (configName: string, testName: string) => {
+  let config =  configName.split("@lambdatest")[0];
   let [browserName, browserVersion, platform] = config.split(":");
   capabilities.browserName = browserName
     ? browserName
